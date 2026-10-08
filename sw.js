@@ -2,7 +2,7 @@
 // Si cambias index.html después de publicar, sube la versión de CACHE.
 // Solo borra cachés con su propio prefijo: las otras apps del mismo dominio (/fitness/, /presupuesto/) guardan las suyas.
 const PREFIX = "invoices-";
-const CACHE = PREFIX + "v1";
+const CACHE = PREFIX + "v2";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./favicon.ico", "./apple-touch-icon.png", "./icon-192.png?v=g8b", "./icon-512.png?v=g8b"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE))); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith(PREFIX) && k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });

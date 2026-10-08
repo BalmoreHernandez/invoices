@@ -31,9 +31,10 @@ No genera facturas electrónicas fiscales (DTE, CFDI u otras); la app lo dice en
 - `CURRENCIES`: monedas que se ofrecen.
 - `TERMS`: plazos de pago en días (0 = al recibir).
 - `PAY_METHODS`: formas de pago al registrar un cobro.
-- `LOGO_MAX_PX`: tamaño máximo al que se reduce el logo del negocio.
+- `LOGO_MAX_PX`: tamaño máximo al que se reduce el logo del negocio (se le recorta el margen vacío al subirlo).
 - Textos de la app en `I18N` (es/en, mismas claves) y textos del documento impreso en `DOC` (es/en).
 - Si cambias `index.html` después de publicar, sube la versión de `CACHE` en `sw.js`.
 
 ## Registro de cambios
 - 2026-10-07 — Primera versión (vista previa, sin publicar) — Nico (Claude Cowork)
+- 2026-10-08 — Columna opcional de extras (add-ons), color de documentos elegible, estado de cuenta numerado con fecha, días de atraso, acumulado y resumen de antigüedad, logos anchos y recorte automático del margen; SW cache v2 — Nico (Claude Cowork)

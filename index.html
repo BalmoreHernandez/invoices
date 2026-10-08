@@ -149,6 +149,8 @@ textarea.inp{padding:12px 14px;min-height:84px;resize:vertical}
 .inp::placeholder{color:#6B7487}
 .inp.money{font-family:var(--fh);font-weight:800}
 .inp.bad{border-color:var(--err)}
+input[type=color].inp{padding:6px;max-width:120px}
+.d-sm{display:none}
 input[type=date].inp{-webkit-appearance:none;appearance:none;min-width:0;font-size:16px;padding:0 10px}
 select.inp{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#566074 50%),linear-gradient(135deg,#566074 50%,transparent 50%);background-position:calc(100% - 20px) 24px,calc(100% - 14px) 24px;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
 .g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
@@ -160,17 +162,20 @@ select.inp{appearance:none;-webkit-appearance:none;background-image:linear-gradi
 .line{border:2px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px;background:var(--bg)}
 .line .inp{background:var(--card)}
 .line .field{margin-bottom:10px}
-.lrow{display:grid;grid-template-columns:92px minmax(0,1fr) 44px;gap:8px;align-items:end}
+.lrow{display:grid;grid-template-columns:92px minmax(0,1fr);gap:8px;align-items:end}
+.lrow.a3{grid-template-columns:70px minmax(0,1fr) minmax(0,1fr)}
+.lrow.a3 .inp{padding:0 9px;font-size:16px}
+.lrow.a3 .field>span{letter-spacing:.06em;white-space:nowrap}
 .lrow .field{margin:0}
-.lrow .icobtn{height:54px}
-.ltot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:10px}
+.ltot{display:flex;align-items:center;gap:10px;margin-top:10px}
+.ltot .lbl{margin-left:auto}
 .ltot b{font-family:var(--fh);font-weight:800;font-size:16px}
 .sum{width:100%;border-collapse:collapse;margin-top:4px}
 .sum th{text-align:left;font-weight:500;color:var(--muted);padding:5px 0}
 .sum td{text-align:right;font-weight:600;padding:5px 0;white-space:nowrap}
 .sum .tot th,.sum .tot td{font-family:var(--fh);font-weight:900;font-size:20px;color:var(--text);border-top:2px solid var(--line);padding-top:10px}
 .logoprev{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-.logoprev img{width:64px;height:64px;object-fit:contain;border:2px solid var(--line);border-radius:12px;background:#fff}
+.logoprev img{max-width:170px;height:64px;width:auto;object-fit:contain;border:2px solid var(--line);border-radius:12px;background:#fff}
 
 /* ---- hoja (modal) ---- */
 .backdrop{position:fixed;inset:0;z-index:30;background:rgba(14,26,46,.45);display:flex;align-items:flex-end;justify-content:center}
@@ -240,14 +245,15 @@ nav.tabs button.on::before{content:"";position:absolute;top:0;left:26%;right:26%
 .or::before,.or::after{content:"";flex:1;height:2px;background:var(--line)}
 
 /* ---- documento (factura / estado de cuenta) ---- */
-.paper{background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:20px 16px;margin-bottom:14px;color:#0E1A2E;font-size:13px;line-height:1.45;overflow-wrap:anywhere}
-.d-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:14px;border-bottom:3px solid #0E1A2E}
-.d-biz{display:flex;gap:12px;align-items:flex-start;min-width:0;flex:1 1 190px}
-.d-biz img{width:64px;height:64px;object-fit:contain;flex:none}
+.paper{--d-acc:#A3263A;--d-ink:#0E1A2E;--d-on:#F6F1E9;background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:20px 16px;margin-bottom:14px;color:#0E1A2E;font-size:13px;line-height:1.45;overflow-wrap:anywhere}
+.d-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:14px;border-bottom:3px solid var(--d-ink)}
+.d-biz{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:flex-start;min-width:0;flex:1 1 190px}
+.d-biz>div{flex:1 1 150px;min-width:0}
+.d-biz img{max-width:170px;max-height:64px;width:auto;height:auto;flex:none}
 .d-biz strong{display:block;font-family:var(--fh);font-weight:800;font-size:17px;line-height:1.2;margin-bottom:3px}
 .d-biz span{display:block;color:#566074}
 .d-meta{margin-left:auto;text-align:right}
-.d-meta h2{font-size:22px;letter-spacing:.04em;color:#A3263A;margin-bottom:6px}
+.d-meta h2{font-size:22px;letter-spacing:.04em;color:var(--d-acc);margin-bottom:6px}
 .d-meta table{margin-left:auto;border-collapse:collapse}
 .d-meta th{font-weight:600;color:#566074;text-align:right;padding:1px 10px 1px 0;white-space:nowrap}
 .d-meta td{text-align:right;font-weight:600}
@@ -256,15 +262,23 @@ nav.tabs button.on::before{content:"";position:absolute;top:0;left:26%;right:26%
 .d-to strong{display:block;font-size:15px}
 .d-to span{display:block}
 .d-tbl{width:100%;border-collapse:collapse;margin:6px 0 12px}
-.d-tbl th{background:#0E1A2E;color:#F6F1E9;font-family:var(--fh);font-weight:800;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:8px 6px;text-align:right}
+.d-tbl th{background:var(--d-ink);color:var(--d-on);font-family:var(--fh);font-weight:800;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:8px 6px;text-align:right;white-space:nowrap;overflow-wrap:normal}
 .d-tbl th:first-child,.d-tbl td:first-child{text-align:left}
+.d-tbl.c5 th,.d-tbl.c5 td{padding-left:4px;padding-right:4px}
+.d-tbl.c5 th{font-size:9px;letter-spacing:.04em}
 .d-tbl td{padding:8px 6px;border-bottom:1px solid #E4DCCF;text-align:right;vertical-align:top;white-space:nowrap}
 .d-tbl td:first-child{white-space:pre-wrap;overflow-wrap:anywhere}
+.d-stm th:nth-child(2),.d-stm td:nth-child(2){text-align:left}
+.d-stm th,.d-stm td,.d-age th,.d-age td{padding-left:4px;padding-right:4px}
+.d-stm th,.d-age th{font-size:9px;letter-spacing:.04em;white-space:normal}
+.d-age th:first-child,.d-age td:first-child{text-align:right;white-space:nowrap}
+.d-age td{font-size:.92em}
+.d-age{margin-bottom:0}
 .d-sum{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
 .d-sum table{border-collapse:collapse;margin-left:auto;min-width:min(250px,100%)}
 .d-sum th{text-align:left;font-weight:500;color:#566074;padding:4px 16px 4px 0}
 .d-sum td{text-align:right;font-weight:600;padding:4px 0;white-space:nowrap}
-.d-sum .tot th,.d-sum .tot td{font-family:var(--fh);font-weight:900;font-size:17px;color:#0E1A2E;border-top:3px solid #0E1A2E;padding-top:8px}
+.d-sum .tot th,.d-sum .tot td{font-family:var(--fh);font-weight:900;font-size:17px;color:#0E1A2E;border-top:3px solid var(--d-ink);padding-top:8px}
 .d-paid{display:inline-block;border:3px solid #1F6B4A;color:#1F6B4A;font-family:var(--fh);font-weight:900;letter-spacing:.12em;padding:4px 12px;border-radius:8px;transform:rotate(-4deg);margin:8px 0 0 4px}
 .d-paid small{display:block;font-family:var(--fb);font-weight:600;letter-spacing:0;font-size:11px}
 .d-note{margin-top:14px}
@@ -286,8 +300,9 @@ nav.tabs button.on::before{content:"";position:absolute;top:0;left:26%;right:26%
   .backdrop{align-items:center}
   .sheet{border-radius:24px;max-height:88vh}
   .paper{padding:40px;font-size:14px}
+  .d-sm{display:table-cell}
 }
-@media (max-width:370px){ h2{font-size:25px} .hero .big{font-size:32px} .lrow{grid-template-columns:78px minmax(0,1fr) 44px} .paper{padding:16px 12px;font-size:12px} }
+@media (max-width:370px){ h2{font-size:25px} .hero .big{font-size:32px} .lrow{grid-template-columns:78px minmax(0,1fr)} .lrow.a3{grid-template-columns:58px minmax(0,1fr) minmax(0,1fr)} .paper{padding:16px 12px;font-size:12px} }
 
 /* ---- impresión / PDF: solo sale el documento ---- */
 @page{margin:14mm}
@@ -299,6 +314,7 @@ nav.tabs button.on::before{content:"";position:absolute;top:0;left:26%;right:26%
   main{max-width:none!important;padding:0!important;margin:0!important}
   main>*:not(.paper){display:none!important}
   .paper{border:0;border-radius:0;padding:0;margin:0;font-size:10.5pt;max-width:none}
+  .d-sm{display:table-cell}
   .d-tbl th,.d-paid{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .d-tbl tr,.d-sum,.d-note{break-inside:avoid}
 }
@@ -345,7 +361,7 @@ const CONFIG = {
   CURRENCIES: ["USD", "MXN", "GTQ", "HNL", "NIO", "CRC", "PAB", "DOP", "COP", "PEN", "CLP", "ARS", "BOB", "PYG", "UYU", "VES", "EUR"],
   TERMS: [0, 7, 15, 30],             // plazos de pago que se ofrecen, en días (0 = al recibir)
   PAY_METHODS: ["check", "cash", "transfer", "card", "other"],
-  LOGO_MAX_PX: 320                   // el logo del negocio se reduce a este tamaño antes de guardarse en el teléfono
+  LOGO_MAX_PX: 480                   // el logo del negocio se reduce a este tamaño antes de guardarse en el teléfono
 };
 
 /* ---------- Textos de la app (ES por defecto, EN opcional) ---------- */
@@ -368,6 +384,7 @@ const I18N = {
     back: "Volver", client: "Cliente", pickClient: "Elige un cliente", newClientOpt: "+ Cliente nuevo", newClientName: "Nombre del cliente nuevo",
     invNo: "Número", ref: "Referencia (opcional)", refPh: "Orden, proyecto, dirección…", date: "Fecha", terms: "Plazo de pago", term0: "Al recibir", termN: "{n} días", termC: "Otra fecha", due: "Vence",
     lines: "Qué estás cobrando", desc: "Descripción", descPh: "Servicio o producto", qty: "Cantidad", price: "Precio", amount: "Importe", addLine: "Agregar línea", delLine: "Quitar línea",
+    addons: "Extras", useAddons: "Columna de extras (add-ons)", optYes: "Sí", optNo: "No", docColor: "Color de tus documentos",
     discount: "Descuento", taxPct: "Impuesto %", subtotal: "Subtotal", tax: "Impuesto", total: "Total", notes: "Notas para el cliente (opcional)", docLang: "Idioma de la factura",
     save: "Guardar", cancel: "Cancelar", close: "Cerrar", delete: "Eliminar", savedT: "Guardado", deletedT: "Eliminado", confirmDelete: "¿Eliminar? No se puede deshacer.", discard: "¿Salir sin guardar los cambios?",
     errClient: "Elige un cliente.", errClientName: "Escribe el nombre del cliente.", errNo: "Escribe el número de la factura.", errNoDup: "Ya existe una factura con ese número.", errDate: "Elige una fecha válida.",
@@ -423,6 +440,7 @@ const I18N = {
     back: "Back", client: "Client", pickClient: "Choose a client", newClientOpt: "+ New client", newClientName: "New client's name",
     invNo: "Number", ref: "Reference (optional)", refPh: "PO, project, address…", date: "Date", terms: "Payment terms", term0: "Due on receipt", termN: "Net {n}", termC: "Other date", due: "Due",
     lines: "What you're billing", desc: "Description", descPh: "Service or product", qty: "Quantity", price: "Price", amount: "Amount", addLine: "Add line", delLine: "Remove line",
+    addons: "Add-ons", useAddons: "Add-ons column", optYes: "Yes", optNo: "No", docColor: "Document color",
     discount: "Discount", taxPct: "Tax %", subtotal: "Subtotal", tax: "Tax", total: "Total", notes: "Notes for the client (optional)", docLang: "Invoice language",
     save: "Save", cancel: "Cancel", close: "Close", delete: "Delete", savedT: "Saved", deletedT: "Deleted", confirmDelete: "Delete? This can't be undone.", discard: "Leave without saving your changes?",
     errClient: "Choose a client.", errClientName: "Enter the client's name.", errNo: "Enter the invoice number.", errNoDup: "An invoice with that number already exists.", errDate: "Choose a valid date.",
@@ -466,11 +484,11 @@ const I18N = {
 const DOC = {
   es: { invoice: "FACTURA", statement: "ESTADO DE CUENTA", no: "No.", date: "Fecha", due: "Vence", ref: "Referencia", billTo: "Facturar a", desc: "Descripción", qty: "Cant.", price: "Precio", amount: "Importe",
     subtotal: "Subtotal", discount: "Descuento", tax: "Impuesto", total: "Total", paid: "PAGADA", paidOn: "{d}", notes: "Notas", payInfo: "Forma de pago", thanks: "Gracias por su preferencia.", taxId: "ID fiscal",
-    daysLate: "Días de atraso", totalDue: "Total por cobrar", invoiceCol: "Factura", term0: "Al recibir",
+    daysLate: "Días de atraso", totalDue: "Total por cobrar", invoiceCol: "Factura", term0: "Al recibir", addons: "Extras", runTotal: "Acumulado", outstanding: "Saldo pendiente", aging: "Antigüedad (días de atraso)", agCurrent: "Al día",
     m_check: "Cheque", m_cash: "Efectivo", m_transfer: "Transferencia", m_card: "Tarjeta", m_other: "Otro" },
   en: { invoice: "INVOICE", statement: "STATEMENT", no: "No.", date: "Date", due: "Due", ref: "Reference", billTo: "Bill to", desc: "Description", qty: "Qty", price: "Price", amount: "Amount",
     subtotal: "Subtotal", discount: "Discount", tax: "Tax", total: "Total", paid: "PAID", paidOn: "{d}", notes: "Notes", payInfo: "Payment", thanks: "Thank you for your business.", taxId: "Tax ID",
-    daysLate: "Days late", totalDue: "Total due", invoiceCol: "Invoice", term0: "On receipt",
+    daysLate: "Days late", totalDue: "Total due", invoiceCol: "Invoice", term0: "On receipt", addons: "Add-ons", runTotal: "Running total", outstanding: "Outstanding balance", aging: "Aging (days past due)", agCurrent: "Current",
     m_check: "Check", m_cash: "Cash", m_transfer: "Bank transfer", m_card: "Card", m_other: "Other" }
 };
 
@@ -479,7 +497,7 @@ const DOC = {
    ===================================================================== */
 const KEY = "bh-invoices-v1";
 const BIZ_DEF = { name: "", address: "", phone: "", email: "", taxId: "", logo: "", payNote: "", footNote: "" };
-const DEF = { v: 1, lang: "es", setup: false, sample: false, bizDone: false, currency: "", docLang: "", biz: { ...BIZ_DEF }, prefix: "", nextNo: 1, terms: 0, taxRate: 0,
+const DEF = { v: 1, lang: "es", setup: false, sample: false, bizDone: false, currency: "", docLang: "", biz: { ...BIZ_DEF }, prefix: "", nextNo: 1, terms: 0, taxRate: 0, addons: false, docColor: "",
   clients: [], items: [], invoices: [], lead: { sent: false, name: "" }, leadHide: false, lastBackup: "", tab: "inicio" };
 const clone = o => JSON.parse(JSON.stringify(o));
 let S = clone(DEF);
@@ -549,12 +567,21 @@ function toRate(v) {
 }
 const rateLabel = (r, l) => r.toLocaleString(loc(l), { maximumFractionDigits: 3 }) + "%";
 const dateLabel = (d, l = S.lang) => (isDate(d) ? new Date(d + "T12:00").toLocaleDateString(dateLoc(l), { day: "numeric", month: "short", year: "numeric" }) : "—");
+const shortDate = (d, l = S.lang) => (isDate(d) ? new Date(d + "T12:00").toLocaleDateString(dateLoc(l), { day: "numeric", month: "numeric", year: "2-digit" }) : "—");
 const waUrl = () => "https://wa.me/" + CONFIG.WHATSAPP_NUMBER + "?text=" + encodeURIComponent(CONFIG.WHATSAPP_TEXT[S.lang] || CONFIG.WHATSAPP_TEXT.es);
 const waHandle = () => CONFIG.WHATSAPP_NUMBER.replace(/^(\d{3})(\d{4})(\d{4})$/, "+$1 $2 $3");
 function toast(msg) { const el = $("#toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("show"), 2400); }
 
 /* ---------- cálculos (centavos enteros; cantidad en centésimas) ---------- */
-const lineTotal = l => Math.round(((l.q || 0) * (l.p || 0)) / 100);
+const lineTotal = l => Math.round(((l.q || 0) * ((l.p || 0) + (l.a || 0))) / 100); // (precio + extras) × cantidad
+const isColor = c => typeof c === "string" && /^#[0-9a-f]{6}$/i.test(c);
+// Color elegido para los documentos: se usa en el título, las líneas y el encabezado de la tabla; el texto encima se pone oscuro o claro según contraste.
+function docStyle() {
+  const c = S.docColor; if (!isColor(c)) return "";
+  const f = i => { const v = parseInt(c.substr(i, 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const L = 0.2126 * f(1) + 0.7152 * f(3) + 0.0722 * f(5);
+  return `--d-acc:${c};--d-ink:${c};--d-on:${(L + 0.05) / 0.05 > 1.05 / (L + 0.05) ? "#0E1A2E" : "#FFFFFF"}`;
+}
 function calc(inv) {
   const sub = inv.lines.reduce((s, l) => s + lineTotal(l), 0);
   const disc = Math.min(Math.max(inv.discount || 0, 0), sub);
@@ -582,7 +609,7 @@ function toCSV() {
 }
 function backupObj() {
   return { app: "bh-invoices", version: 1, exported: new Date().toISOString(),
-    data: { currency: cur(), docLang: S.docLang, sample: !!S.sample, bizDone: !!S.bizDone, biz: S.biz, prefix: S.prefix, nextNo: S.nextNo, terms: S.terms, taxRate: S.taxRate, clients: S.clients, items: S.items, invoices: S.invoices } };
+    data: { currency: cur(), docLang: S.docLang, sample: !!S.sample, bizDone: !!S.bizDone, biz: S.biz, prefix: S.prefix, nextNo: S.nextNo, terms: S.terms, taxRate: S.taxRate, addons: !!S.addons, docColor: S.docColor, clients: S.clients, items: S.items, invoices: S.invoices } };
 }
 // Valida y limpia un respaldo. Lanza Error("invalid") si no sirve.
 function parseBackup(text) {
@@ -597,12 +624,12 @@ function parseBackup(text) {
   const items = arr(d.items).filter(i => i && i.id && int(i.price) >= 0).map(i => ({ id: str(i.id, 40), name: str(i.name) || "—", price: i.price }));
   const invoices = arr(d.invoices).filter(x => x && x.id && isDate(x.date) && ids.has(x.client) && Array.isArray(x.lines)).map(x => ({
     id: str(x.id, 40), no: str(x.no, 40) || "—", date: x.date, due: isDate(x.due) ? x.due : x.date, client: x.client, ref: str(x.ref),
-    lines: x.lines.filter(l => l && int(l.q) > 0 && int(l.p) >= 0).map(l => ({ d: str(l.d), q: l.q, p: l.p })),
+    lines: x.lines.filter(l => l && int(l.q) > 0 && int(l.p) >= 0).map(l => ({ d: str(l.d), q: l.q, p: l.p, ...(int(l.a) > 0 ? { a: l.a } : {}) })),
     discount: int(x.discount) > 0 ? x.discount : 0, taxRate: typeof x.taxRate === "number" && x.taxRate >= 0 && x.taxRate <= 100 ? x.taxRate : 0,
     notes: str(x.notes, 1000), lang: x.lang === "en" ? "en" : "es",
     paid: x.paid && isDate(x.paid.date) ? { date: x.paid.date, method: CONFIG.PAY_METHODS.includes(x.paid.method) ? x.paid.method : "other", ref: str(x.paid.ref, 80) } : null }));
   return { currency: CONFIG.CURRENCIES.includes(d.currency) ? d.currency : cur(), docLang: d.docLang === "en" ? "en" : "es", sample: !!d.sample, bizDone: !!d.bizDone, biz,
-    prefix: str(d.prefix, 12), nextNo: int(d.nextNo) > 0 ? d.nextNo : 1, terms: CONFIG.TERMS.includes(d.terms) ? d.terms : 0, taxRate: typeof d.taxRate === "number" && d.taxRate >= 0 && d.taxRate <= 100 ? d.taxRate : 0, clients, items, invoices };
+    prefix: str(d.prefix, 12), nextNo: int(d.nextNo) > 0 ? d.nextNo : 1, terms: CONFIG.TERMS.includes(d.terms) ? d.terms : 0, taxRate: typeof d.taxRate === "number" && d.taxRate >= 0 && d.taxRate <= 100 ? d.taxRate : 0, addons: !!d.addons, docColor: isColor(d.docColor) ? d.docColor : "", clients, items, invoices };
 }
 function download(name, text, type) {
   const url = URL.createObjectURL(new Blob([text], { type }));
@@ -610,7 +637,7 @@ function download(name, text, type) {
   setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
 const backupName = () => `facturas-respaldo-${todayISO()}.json`;
-const DATA_KEYS = ["currency", "docLang", "sample", "bizDone", "biz", "prefix", "nextNo", "terms", "taxRate", "clients", "items", "invoices"];
+const DATA_KEYS = ["currency", "docLang", "sample", "bizDone", "biz", "prefix", "nextNo", "terms", "taxRate", "addons", "docColor", "clients", "items", "invoices"];
 function loadData(d) { for (const k of DATA_KEYS) if (k in d) S[k] = d[k]; S.setup = true; }
 function clearData() { const d = clone(DEF); for (const k of DATA_KEYS) S[k] = d[k]; S.setup = false; }
 
@@ -824,11 +851,11 @@ function docTo(l, c) {
 }
 const docFoot = l => `${S.biz.payNote ? `<div class="d-note"><p class="d-lbl">${dl("payInfo", l)}</p><p>${esc(S.biz.payNote)}</p></div>` : ""}<div class="d-foot">${esc(S.biz.footNote || dl("thanks", l))}</div>`;
 function docInvoice(x) {
-  const l = docLang(x.lang), c = calc(x), M = v => money(v, l);
+  const l = docLang(x.lang), c = calc(x), M = v => money(v, l), hasA = x.lines.some(r => r.a > 0);
   return `${docTop(l, dl("invoice", l), [[dl("no", l), esc(x.no)], [dl("date", l), dateLabel(x.date, l)], [dl("due", l), dateLabel(x.due, l)], ...(x.ref ? [[dl("ref", l), esc(x.ref)]] : [])])}
   ${docTo(l, clientOf(x.client))}
-  <table class="d-tbl"><thead><tr><th>${dl("desc", l)}</th><th>${dl("qty", l)}</th><th>${dl("price", l)}</th><th>${dl("amount", l)}</th></tr></thead>
-    <tbody>${x.lines.map(r => `<tr><td>${esc(r.d)}</td><td>${qtyLabel(r.q, l)}</td><td>${M(r.p)}</td><td>${M(lineTotal(r))}</td></tr>`).join("")}</tbody></table>
+  <table class="d-tbl ${hasA ? "c5" : ""}"><thead><tr><th>${dl("desc", l)}</th><th>${dl("price", l)}</th>${hasA ? `<th>${dl("addons", l)}</th>` : ""}<th>${dl("qty", l)}</th><th>${dl("amount", l)}</th></tr></thead>
+    <tbody>${x.lines.map(r => `<tr><td>${esc(r.d)}</td><td>${M(r.p)}</td>${hasA ? `<td>${r.a ? M(r.a) : ""}</td>` : ""}<td>${qtyLabel(r.q, l)}</td><td>${M(lineTotal(r))}</td></tr>`).join("")}</tbody></table>
   <div class="d-sum">${x.paid ? `<div class="d-paid">${dl("paid", l)}<small>${dateLabel(x.paid.date, l)} · ${dl("m_" + x.paid.method, l)}${x.paid.ref ? " #" + esc(x.paid.ref) : ""}</small></div>` : ""}<table>
     <tr><th>${dl("subtotal", l)}</th><td>${M(c.sub)}</td></tr>
     ${c.disc ? `<tr><th>${dl("discount", l)}</th><td>−${M(c.disc)}</td></tr>` : ""}
@@ -838,11 +865,14 @@ function docInvoice(x) {
 }
 function docStatement(c) {
   const l = docLang(), td = todayISO(), M = v => money(v, l), list = openOf(c.id).sort((a, b) => a.date.localeCompare(b.date));
-  const total = list.reduce((s, x) => s + calc(x).total, 0);
-  return `${docTop(l, dl("statement", l), [[dl("date", l), dateLabel(td, l)]])}${docTo(l, c)}
-  <table class="d-tbl"><thead><tr><th>${dl("invoiceCol", l)}</th><th>${dl("date", l)}</th><th>${dl("due", l)}</th><th>${dl("daysLate", l)}</th><th>${dl("amount", l)}</th></tr></thead>
-    <tbody>${list.map(x => `<tr><td>#${esc(x.no)}</td><td>${dateLabel(x.date, l)}</td><td>${dateLabel(x.due, l)}</td><td>${Math.max(diffDays(td, x.due), 0) || "—"}</td><td>${M(calc(x).total)}</td></tr>`).join("")}</tbody></table>
-  <div class="d-sum"><table><tr class="tot"><th>${dl("totalDue", l)}</th><td>${M(total)}</td></tr></table></div>${docFoot(l)}`;
+  const total = list.reduce((s, x) => s + calc(x).total, 0), late = x => Math.max(diffDays(td, x.due), 0); let run = 0;
+  // Antigüedad: cuánto se debe según los días de atraso de cada factura (al día, 1–30, 31–60, 61–90, más de 90)
+  const age = [0, 0, 0, 0, 0]; list.forEach(x => { const n = late(x); age[n <= 0 ? 0 : n <= 30 ? 1 : n <= 60 ? 2 : n <= 90 ? 3 : 4] += calc(x).total; });
+  return `${docTop(l, dl("statement", l), [[dl("date", l), dateLabel(td, l)], [dl("outstanding", l), M(total)]])}${docTo(l, c)}
+  <table class="d-tbl d-stm"><thead><tr><th>#</th><th>${dl("invoiceCol", l)}</th><th>${dl("date", l)}</th><th>${dl("daysLate", l)}</th><th>${dl("amount", l)}</th><th>${dl("runTotal", l)}</th></tr></thead>
+    <tbody>${list.map((x, i) => { const t = calc(x).total; run += t; return `<tr><td>${i + 1}</td><td>${esc(x.no)}</td><td>${shortDate(x.date, l)}</td><td>${late(x) || "—"}</td><td>${M(t)}</td><td>${M(run)}</td></tr>`; }).join("")}</tbody></table>
+  <div class="d-sum"><table><tr class="tot"><th>${dl("totalDue", l)}</th><td>${M(total)}</td></tr></table></div>
+  <div class="d-note"><p class="d-lbl">${dl("aging", l)}</p><table class="d-tbl d-age"><thead><tr><th>${dl("agCurrent", l)}</th><th>1–30</th><th>31–60</th><th>61–90</th><th>90+</th></tr></thead><tbody><tr>${age.map(v => `<td>${M(v)}</td>`).join("")}</tr></tbody></table></div>${docFoot(l)}`;
 }
 function vInvoice() {
   const x = S.invoices.find(i => i.id === UI.view); if (!x) { UI.view = null; return vFacturas(); }
@@ -854,7 +884,7 @@ function vInvoice() {
       <button type="button" class="btn ghost" data-act="editInv" id="editInvBtn">${I("edit")}${t("edit")}</button></div>
     <div class="g2"><button type="button" class="btn ghost sm" data-act="dupInv" id="dupBtn">${I("copy")}${t("duplicate")}</button><button type="button" class="btn danger sm" data-act="delInv" id="delInvBtn">${I("trash")}${t("delete")}</button></div></div>
     <p class="help">${t("pdfHelp")}</p></section>
-  <article class="paper narrow" id="paper" lang="${docLang(x.lang)}">${docInvoice(x)}</article>`;
+  <article class="paper narrow" id="paper" lang="${docLang(x.lang)}" style="${docStyle()}">${docInvoice(x)}</article>`;
 }
 function vStatement() {
   const c = clientOf(UI.stmt); if (!c) { UI.stmt = null; return vClientes(); }
@@ -862,36 +892,38 @@ function vStatement() {
   return `<div class="head"><button type="button" class="link" data-act="closeSub">${I("left")}${t("clients")}</button></div>
   <section class="card narrow"><h3 style="margin-bottom:12px">${t("statement")} · ${esc(c.name)}</h3>
     ${has ? `<button type="button" class="btn block" data-act="print" id="printBtn">${I("download")}${t("pdfBtn")}</button><p class="help">${t("pdfHelp")}</p>` : `<p class="muted" style="margin:0">${t("stmtNone")}</p>`}</section>
-  ${has ? `<article class="paper narrow" id="paper" lang="${docLang()}">${docStatement(c)}</article>` : ""}`;
+  ${has ? `<article class="paper narrow" id="paper" lang="${docLang()}" style="${docStyle()}">${docStatement(c)}</article>` : ""}`;
 }
 
 /* =====================================================================
    EDITOR DE FACTURA
    ===================================================================== */
-const draftLine = l => ({ d: l.d.trim(), q: toCents(String(l.q).trim() || "1"), p: toCents(l.p) });
+const draftLine = l => ({ d: l.d.trim(), q: toCents(String(l.q).trim() || "1"), p: toCents(l.p), a: String(l.a ?? "").trim() ? toCents(l.a) : 0 });
+const blankLine = () => ({ d: "", q: "1", p: "", a: "" });
 function draftCalc(e) {
-  const lines = e.lines.map(draftLine).map(l => ({ q: l.q > 0 ? l.q : 0, p: l.p >= 0 ? l.p : 0 }));
+  const lines = e.lines.map(draftLine).map(l => ({ q: l.q > 0 ? l.q : 0, p: l.p >= 0 ? l.p : 0, a: l.a >= 0 ? l.a : 0 }));
   const d = toCents(e.discount), r = toRate(e.taxRate);
   return { lines, taxRate: r >= 0 ? r : 0, ...calc({ lines, discount: d > 0 ? d : 0, taxRate: r >= 0 ? r : 0 }) };
 }
 function newDraft(from) {
   const date = todayISO();
   if (from) return { id: null, no: S.prefix + S.nextNo, date, terms: "c", due: addDays(date, Math.max(diffDays(from.due, from.date), 0)), client: from.client, newClient: "", ref: from.ref || "",
-    lines: from.lines.map(l => ({ d: l.d, q: qtyToInput(l.q), p: centsToInput(l.p) })), discount: from.discount ? centsToInput(from.discount) : "", taxRate: from.taxRate ? String(from.taxRate) : "", notes: from.notes || "", lang: docLang(from.lang), dirty: true };
+    lines: from.lines.map(l => ({ d: l.d, q: qtyToInput(l.q), p: centsToInput(l.p), a: l.a ? centsToInput(l.a) : "" })), discount: from.discount ? centsToInput(from.discount) : "", taxRate: from.taxRate ? String(from.taxRate) : "", notes: from.notes || "", lang: docLang(from.lang), dirty: true };
   return { id: null, no: S.prefix + S.nextNo, date, terms: String(S.terms), due: addDays(date, S.terms), client: S.clients.length ? "" : NEW, newClient: "", ref: "",
-    lines: [{ d: "", q: "1", p: "" }], discount: "", taxRate: S.taxRate ? String(S.taxRate) : "", notes: "", lang: docLang(), dirty: false };
+    lines: [blankLine()], discount: "", taxRate: S.taxRate ? String(S.taxRate) : "", notes: "", lang: docLang(), dirty: false };
 }
 function editDraft(x) {
   const n = diffDays(x.due, x.date);
   return { id: x.id, no: x.no, date: x.date, terms: CONFIG.TERMS.includes(n) ? String(n) : "c", due: x.due, client: x.client, newClient: "", ref: x.ref || "",
-    lines: x.lines.map(l => ({ d: l.d, q: qtyToInput(l.q), p: centsToInput(l.p) })), discount: x.discount ? centsToInput(x.discount) : "", taxRate: x.taxRate ? String(x.taxRate) : "", notes: x.notes || "", lang: docLang(x.lang), dirty: false };
+    lines: x.lines.map(l => ({ d: l.d, q: qtyToInput(l.q), p: centsToInput(l.p), a: l.a ? centsToInput(l.a) : "" })), discount: x.discount ? centsToInput(x.discount) : "", taxRate: x.taxRate ? String(x.taxRate) : "", notes: x.notes || "", lang: docLang(x.lang), dirty: false };
 }
-const lineHtml = (l, i) => `<div class="line" data-i="${i}">
+const lineHtml = (l, i) => { const x = draftLine(l), ad = S.addons || String(l.a ?? "").trim();
+  return `<div class="line" data-i="${i}">
   <label class="field"><span>${t("desc")}</span><input class="inp" data-l="d" list="itemsList" maxlength="200" autocomplete="off" placeholder="${t("descPh")}" value="${esc(l.d)}"></label>
-  <div class="lrow"><label class="field"><span>${t("qty")}</span><input class="inp" data-l="q" inputmode="decimal" autocomplete="off" value="${esc(l.q)}"></label>
+  <div class="lrow ${ad ? "a3" : ""}"><label class="field"><span>${t("qty")}</span><input class="inp" data-l="q" inputmode="decimal" autocomplete="off" value="${esc(l.q)}"></label>
     <label class="field"><span>${t("price")}</span><input class="inp money" data-l="p" inputmode="decimal" autocomplete="off" placeholder="${amtPh()}" value="${esc(l.p)}"></label>
-    <button type="button" class="icobtn" data-act="delLine" data-i="${i}" aria-label="${t("delLine")}">${I("trash")}</button></div>
-  <div class="ltot"><span class="lbl">${t("amount")}</span><b data-lt>${money(lineTotal({ q: Math.max(draftLine(l).q || 0, 0), p: Math.max(draftLine(l).p || 0, 0) }))}</b></div></div>`;
+    ${ad ? `<label class="field"><span>${t("addons")}</span><input class="inp money" data-l="a" inputmode="decimal" autocomplete="off" placeholder="${amtPh()}" value="${esc(l.a ?? "")}"></label>` : ""}</div>
+  <div class="ltot"><button type="button" class="icobtn" data-act="delLine" data-i="${i}" aria-label="${t("delLine")}">${I("trash")}</button><span class="lbl">${t("amount")}</span><b data-lt>${money(lineTotal({ q: Math.max(x.q || 0, 0), p: Math.max(x.p || 0, 0), a: Math.max(x.a || 0, 0) }))}</b></div></div>`; };
 const totalsHtml = c => `<table class="sum"><tr><th>${t("subtotal")}</th><td>${money(c.sub)}</td></tr>${c.disc ? `<tr><th>${t("discount")}</th><td>−${money(c.disc)}</td></tr>` : ""}${c.taxRate ? `<tr><th>${t("tax")} (${rateLabel(c.taxRate)})</th><td>${money(c.tax)}</td></tr>` : ""}<tr class="tot"><th>${t("total")}</th><td id="eTotal">${money(c.total)}</td></tr></table>`;
 function vEditor() {
   const e = UI.edit, clients = [...S.clients].sort((a, b) => a.name.localeCompare(b.name));
@@ -954,7 +986,8 @@ function saveInvoice() {
     if (!l.d) return editErr(t("errLineDesc"), row?.querySelector('[data-l="d"]'));
     if (!(l.q > 0) || l.q > 1e9) return editErr(t("errQty"), row?.querySelector('[data-l="q"]'));
     if (!(l.p >= 0) || l.p > 1e13) return editErr(t("errPrice"), row?.querySelector('[data-l="p"]'));
-    lines.push(l);
+    if (!(l.a >= 0) || l.a > 1e13) return editErr(t("errAmount"), row?.querySelector('[data-l="a"]'));
+    lines.push(l.a ? l : { d: l.d, q: l.q, p: l.p });
   }
   if (!lines.length) return editErr(t("errLines"), rows[0]?.querySelector('[data-l="d"]'));
   const discount = e.discount.trim() ? toCents(e.discount) : 0;
@@ -1001,8 +1034,9 @@ function renderSheet() {
       <h4>${t("bizInvT")}</h4>
       <div class="g2">${field(t("prefix"), txt("sPrefix", S.prefix, 12, `placeholder="${t("prefixPh")}"`))}${field(t("nextNo"), `<input class="inp" id="sNextNo" inputmode="numeric" autocomplete="off" value="${S.nextNo}">`)}</div>
       <div class="g2">${field(t("defTerms"), sel("sTerms", CONFIG.TERMS.map(n => [String(n), termLabel(n)]), S.terms))}${field(t("defTax"), `<input class="inp" id="sTax" inputmode="decimal" autocomplete="off" placeholder="0" value="${S.taxRate || ""}">`)}</div>
-      ${field(t("docLang"), sel("sDocLang", langOpts(), docLang()))}
-      ${field(t("payNote"), `<textarea class="inp" id="sPayNote" maxlength="600" rows="2" placeholder="${t("payNotePh")}">${esc(b.payNote)}</textarea>`)}
+      <div class="g2">${field(t("docLang"), sel("sDocLang", langOpts(), docLang()))}${field(t("useAddons"), sel("sAddons", [["0", t("optNo")], ["1", t("optYes")]], S.addons ? "1" : "0"))}</div>
+      ${field(t("docColor"), `<input class="inp" id="sColor" type="color" value="${isColor(S.docColor) ? S.docColor : "#0e1a2e"}">`)}
+      ${field(t("payNote"), `<textarea class="inp" id="sPayNote" maxlength="600" rows="3" placeholder="${t("payNotePh")}">${esc(b.payNote)}</textarea>`)}
       ${field(t("footNote"), txt("sFootNote", b.footNote, 300, `placeholder="${t("footNotePh")}"`))}`;
   } else if (kind === "pay") {
     title = t("payT") + " · #" + d.no;
@@ -1039,6 +1073,7 @@ function submitSheet() {
     if (Number.isNaN(rate)) return sheetErr(t("errTax"), $("#sTax"));
     S.biz = { name: v("#sName"), address: v("#sAddress"), phone: v("#sPhone"), email: v("#sEmail"), taxId: v("#sTaxId"), logo: UI.sheet.logo || "", payNote: v("#sPayNote"), footNote: v("#sFootNote") };
     S.prefix = v("#sPrefix"); S.nextNo = next; S.terms = Number(v("#sTerms")) || 0; S.taxRate = rate; S.docLang = v("#sDocLang") === "en" ? "en" : "es"; S.bizDone = true;
+    S.addons = v("#sAddons") === "1"; S.docColor = isColor(v("#sColor")) && v("#sColor").toLowerCase() !== "#0e1a2e" ? v("#sColor").toLowerCase() : "";
   } else if (kind === "pay") {
     const date = v("#sPayDate"); if (!isDate(date)) return sheetErr(t("errDate"), $("#sPayDate"));
     const paid = { date, method: CONFIG.PAY_METHODS.includes(v("#sPayMethod")) ? v("#sPayMethod") : "other", ref: v("#sPayRef") };
@@ -1060,9 +1095,15 @@ function readLogo(file) {
   const url = URL.createObjectURL(file), img = new Image();
   img.onload = () => {
     try {
-      const k = Math.min(1, CONFIG.LOGO_MAX_PX / Math.max(img.naturalWidth || 1, img.naturalHeight || 1));
-      const w = Math.max(1, Math.round((img.naturalWidth || CONFIG.LOGO_MAX_PX) * k)), h = Math.max(1, Math.round((img.naturalHeight || CONFIG.LOGO_MAX_PX) * k));
-      const cv = document.createElement("canvas"); cv.width = w; cv.height = h; const cx = cv.getContext("2d"); cx.drawImage(img, 0, 0, w, h);
+      // 1) dibuja la imagen, 2) recorta el margen vacío (transparente o casi blanco), 3) la reduce a LOGO_MAX_PX
+      const iw = img.naturalWidth || CONFIG.LOGO_MAX_PX, ih = img.naturalHeight || CONFIG.LOGO_MAX_PX, k0 = Math.min(1, 1200 / Math.max(iw, ih));
+      const sw = Math.max(1, Math.round(iw * k0)), sh = Math.max(1, Math.round(ih * k0));
+      const c0 = document.createElement("canvas"); c0.width = sw; c0.height = sh; const x0 = c0.getContext("2d"); x0.drawImage(img, 0, 0, sw, sh);
+      const px = x0.getImageData(0, 0, sw, sh).data; let l = sw, r = -1, tp = sh, bt = -1;
+      for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) { const o = (y * sw + x) * 4; if (px[o + 3] > 16 && (px[o] < 244 || px[o + 1] < 244 || px[o + 2] < 244)) { if (x < l) l = x; if (x > r) r = x; if (y < tp) tp = y; if (y > bt) bt = y; } }
+      if (r < l) { l = 0; r = sw - 1; tp = 0; bt = sh - 1; }
+      const cw = r - l + 1, ch = bt - tp + 1, k = Math.min(1, CONFIG.LOGO_MAX_PX / Math.max(cw, ch)), w = Math.max(1, Math.round(cw * k)), h = Math.max(1, Math.round(ch * k));
+      const cv = document.createElement("canvas"); cv.width = w; cv.height = h; const cx = cv.getContext("2d"); cx.drawImage(c0, l, tp, cw, ch, 0, 0, w, h);
       let data = cv.toDataURL("image/png");
       if (data.length > 3e5) { cx.globalCompositeOperation = "destination-over"; cx.fillStyle = "#fff"; cx.fillRect(0, 0, w, h); data = cv.toDataURL("image/jpeg", 0.85); }
       if (UI.sheet?.kind === "biz") { UI.sheet.logo = data; $("#logoPrev").innerHTML = logoPrev(data); }
@@ -1140,8 +1181,8 @@ const ACT = {
   delInv: () => { if (!confirm(t("confirmDelete"))) return; S.invoices = S.invoices.filter(i => i.id !== UI.view); save(); closeSub(true); toast(t("deletedT")); },
   cancelEdit: () => { if (!leaveOk()) return; const e = UI.edit; if (e?.id) { UI.edit = null; UI.view = e.id; renderMain(); window.scrollTo(0, 0); } else closeSub(true); },
   closeSub: () => closeSub(),
-  addLine: () => { syncDraft(); UI.edit.lines.push({ d: "", q: "1", p: "" }); UI.edit.dirty = true; renderMain(); const r = $$("#eLines .line").pop(); r?.querySelector("input")?.focus(); },
-  delLine: el => { syncDraft(); const e = UI.edit; e.lines.splice(+el.dataset.i, 1); if (!e.lines.length) e.lines.push({ d: "", q: "1", p: "" }); e.dirty = true; const y = window.scrollY; renderMain(); window.scrollTo(0, y); },
+  addLine: () => { syncDraft(); UI.edit.lines.push(blankLine()); UI.edit.dirty = true; renderMain(); const r = $$("#eLines .line").pop(); r?.querySelector("input")?.focus(); },
+  delLine: el => { syncDraft(); const e = UI.edit; e.lines.splice(+el.dataset.i, 1); if (!e.lines.length) e.lines.push(blankLine()); e.dirty = true; const y = window.scrollY; renderMain(); window.scrollTo(0, y); },
   pay: () => openSheet("pay", UI.view),
   unpay: () => { if (!confirm(t("unpayConfirm"))) return; S.invoices = S.invoices.map(x => (x.id === UI.view ? { ...x, paid: null } : x)); save(); renderMain(); },
   print: () => printDoc(),
